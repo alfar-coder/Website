@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vefsíða</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+        <div class="overlay"></div>
+    </div>
+    <audio id="stone-audio" preload="auto" src="Aphex Twin - Stone In Focus.mp3"></audio>
+    <button class="circular-play" id="stone-toggle" aria-label="Play Stone In Focus">
+        ▸
+    </button>
+    <div class="content">
+        <div class="main-frame">
+            <div class="text-content">
+                <span>I'm Álfar Smári — a designer from Iceland and co-founder of Manneskja. I build modern, </span><br>
+                <span>considered interfaces for apps and websites, with a focus on clarity, simplicity, and tight attention to detail.</span>
+            </div>
+            <div class="links-container">
+                <a href="#" class="link-link link-manneskja">
+                    <span class="arrow">↳</span>
+                    <span class="link-text">MAnneskja</span>
+                </a>
+                <a href="#" class="link-link link-instagram">
+                    <span class="arrow">↳</span>
+                    <span class="link-text">Instagram</span>
+                </a>
+                <a href="#" class="link-link link-twitter">
+                    <span class="arrow">↳</span>
+                    <span class="link-text">twitter</span>
+                </a>
+            </div>
+        </div>
+        <div class="footer">
+            <button class="footer-text footer-copy" id="email-copy-btn" aria-label="Copy email">
+                alfar@manneskja.is
+            </button>
+            <div class="copy-pill" id="copy-pill" role="status" aria-live="polite">Copied</div>
+        </div>
+    </div>
+    <script>
+        const copyBtn = document.getElementById('email-copy-btn');
+        const copyPill = document.getElementById('copy-pill');
+        let copyTimeout;
+
+        copyBtn.addEventListener('click', async () => {
+            const email = copyBtn.textContent.trim();
+            try {
+                await navigator.clipboard.writeText(email);
+                copyPill.classList.add('visible');
+                clearTimeout(copyTimeout);
+                copyTimeout = setTimeout(() => {
+                    copyPill.classList.remove('visible');
+                }, 2000);
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+        });
+
+        // Stone In Focus player
+        const stoneBtn = document.getElementById('stone-toggle');
+        const stoneAudio = document.getElementById('stone-audio');
+        let stonePlaying = false;
+
+        function setStoneLabel(label) {
+            stoneBtn.textContent = label;
+        }
+
+        stoneBtn.addEventListener('click', async () => {
+            if (!stoneAudio) return;
+            if (stonePlaying) {
+                stoneAudio.pause();
+                stonePlaying = false;
+                setStoneLabel('▸');
+            } else {
+                try {
+                    await stoneAudio.play();
+                    stonePlaying = true;
+                    setStoneLabel('■');
+                } catch (err) {
+                    console.error('Audio play failed', err);
+                    setStoneLabel('!');
+                }
+            }
+        });
+
+        // Best-effort autoplay: browsers often block without user gesture.
+        let triedAutoplay = false;
+        async function tryAutoplay() {
+            if (triedAutoplay || stonePlaying) return;
+            triedAutoplay = true;
+            try {
+                await stoneAudio.play();
+                stonePlaying = true;
+                setStoneLabel('■');
+            } catch (err) {
+                // If blocked, wait for first user interaction.
+                document.addEventListener('pointerdown', resumeFromGesture, { once: true });
+            }
+        }
+
+        async function resumeFromGesture() {
+            try {
+                await stoneAudio.play();
+                stonePlaying = true;
+                setStoneLabel('■');
+            } catch (err) {
+                setStoneLabel('▸');
+            }
+        }
+
+        tryAutoplay();
+
+        stoneAudio.addEventListener('ended', () => {
+            stonePlaying = false;
+            setStoneLabel('▸');
+        });
+    </script>
+</body>
+</html>
+
