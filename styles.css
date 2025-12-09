@@ -274,20 +274,25 @@ body {
     } 
 }
 
-/* default: desktop */
+/* Default: desktop first */
+.text-desktop {
+    display: block;
+}
+
 .text-mobile {
     display: none;
 }
 
-/* mobile-only text layout */
+/* Mobile: hide desktop text, show mobile version */
 @media (max-width: 768px) {
     .text-desktop {
-        display: none;
+        display: none !important;
     }
 
     .text-mobile {
-        display: block;
+        display: block !important;
     }
 }
+
 
 
