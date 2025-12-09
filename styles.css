@@ -12,11 +12,14 @@ html {
 }
 
 body {
-    /* ... other styles ... */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Allow vertical scrolling */
     overflow-y: auto; 
     overflow-x: hidden;
-    min-height: 100dvh; 
-    /* ... other styles ... */
+    /* Ensure body is at least as tall as the screen */
+    min-height: 100dvh;
+    /* Smooth scrolling on iOS */
+    -webkit-overflow-scrolling: touch; 
 }
 
 
@@ -60,15 +63,14 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    /* Use a fixed height well over the screen height */
     width: 100%;
-    height: 120vh; 
+    /* 100dvh forces it to stretch behind the bottom Safari bar */
+    height: 100dvh; 
     z-index: -1;
     overflow: hidden;
     background-color: #000;
-    /* Center it vertically but allow for an offset to cover the bottom safely */
-    transform: translateY(-10vh); 
-    /* This ensures the entire 120vh is positioned from -10vh to 110vh */
+    /* Ensure the image doesn't jump when bars appear/disappear */
+    transform: translateZ(0); 
 }
 .background-image {
     position: absolute;
@@ -87,17 +89,31 @@ body {
 
 
 .content {
-    /* ... existing styles ... */
+    position: relative;
+    z-index: 1;
+    /* Change to min-height so it can grow if needed */
     min-height: 100dvh; 
-    /* Add padding for the bottom safe area */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    /* Add extra padding at the bottom for mobile bars */
     padding-bottom: calc(80px + env(safe-area-inset-bottom));
 }
 
 .footer {
     position: fixed;
-    /* Push it up by the safe area amount */
+    /* Push it up by the safe area amount so the black bar doesn't cover it */
     bottom: calc(12px + env(safe-area-inset-bottom));
-    /* ... existing styles ... */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
 }
 
 .footer-text {
@@ -253,6 +269,3 @@ body {
         min-height: 100dvh; 
     }
 }
-
-
-
