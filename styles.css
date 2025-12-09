@@ -257,14 +257,20 @@ body {
     transform: scale(0.96);
 }
 
-@media (max-width: 768px) {
-    html,
-    body {
-        overflow: hidden; /* still no scroll, but no forced height */
-    }
+@supports (height: 100dvh) {
+    @media (max-width: 768px) {
+        html,
+        body {
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
 
-    .content {
-        min-height: 100svh;
+        .content {
+            min-height: 100dvh;
+        }
     }
 }
+
+
 
