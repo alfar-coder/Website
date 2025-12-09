@@ -50,15 +50,15 @@ body {
 
 .background-container {
     position: fixed;
-    inset: 0;
+    inset: -12%; /* extend beyond viewport on all sides */
     z-index: -1;
     background-image: url('12.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     filter: blur(80px);
-    transform: scale(1.05); /* tiny oversize to hide blur edges */
 }
+
 
 
 .content {
