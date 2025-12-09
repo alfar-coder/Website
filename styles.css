@@ -1,14 +1,8 @@
-
 html {
     /* Allow height to grow naturally */
     height: auto;
-    background-color: #000; /* fallback */
-    background-image: url('12.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: #000;
 }
-
 
 
 * {
@@ -19,10 +13,14 @@ html {
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Allow vertical scrolling */
+    overflow-y: auto; 
     overflow-x: hidden;
-    overflow-y: hidden;  /* no scroll */
+    /* Ensure body is at least as tall as the screen */
+    min-height: 100dvh;
+    /* Smooth scrolling on iOS */
+    -webkit-overflow-scrolling: touch; 
 }
-
 
 
 /* SF Pro Text setup */
@@ -61,32 +59,32 @@ body {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-.background-container {
-    position: fixed;
-    top: -10vh;
-    left: 0;
-    width: 100%;
-    height: 140vh;
-    z-index: -1;
-    overflow: hidden;
-    background-color: transparent; /* was #000 */
-    transform: translateZ(0);
-}
-
-
 .background-image {
     position: absolute;
-    top: 0;
-    left: -10vw;
-    width: 120vw;
-    height: 140vh;       /* match the container height */
-    background-image: url('12.png');
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background-image: url('12.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    /* no blur anymore */
+    /* Reduce the heavy blur for mobile testing */
+    filter: blur(50px); 
+    /* Or try: filter: none; */
 }
-
+.background-image {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background-image: url('12.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(200px);
+}
 
 
 
