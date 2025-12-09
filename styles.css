@@ -10,7 +10,12 @@ body {
     position: relative;
     min-height: 100svh;
     background-color: #000;
+    background-image: url('12.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
+
 
 /* SF Pro Text setup */
 @font-face {
@@ -50,16 +55,14 @@ body {
 
 .background-container {
     position: fixed;
-    top: -10vh;      /* extend above */
-    left: 0;
-    right: 0;
-    bottom: -25vh;   /* extend further below the viewport */
+    inset: 0;
     z-index: -1;
-    background-image: url('12.jpg');
-    background-size: cover;
-    background-position: center top; /* bias image upwards so more is below */
-    background-repeat: no-repeat;
-    filter: blur(80px);
+    pointer-events: none;
+}
+
+/* not needed anymore, but safe to leave the div in HTML */
+.background-image {
+    display: none;
 }
 
 
