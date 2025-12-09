@@ -15,16 +15,11 @@
     <!-- Audio -->
     <audio id="stone-audio" preload="auto" src="Aphex Twin - Stone In Focus.mp3"></audio>
 
-    <!-- Listen / Mute button (same style as footer email) -->
+    <!-- Listen / Mute text -->
     <div class="audio-toggle">
-        <button
-            id="stone-toggle"
-            class="footer-text audio-toggle-button"
-            type="button"
-            aria-label="Toggle music"
-        >
+        <span id="stone-toggle" class="audio-toggle-text">
             Listen
-        </button>
+        </span>
     </div>
 
     <div class="content">
@@ -99,7 +94,7 @@
             }
         });
 
-        // -------- Stone In Focus player (Listen / Mute button) --------
+        // -------- Stone In Focus player (Listen / Mute text) --------
         const stoneToggle = document.getElementById('stone-toggle');
         const stoneAudio = document.getElementById('stone-audio');
         let stonePlaying = false;
