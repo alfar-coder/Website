@@ -1,3 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    background-color: #000;
+}
+
 /* SF Pro Text setup */
 @font-face {
     font-family: "SF Pro Text";
