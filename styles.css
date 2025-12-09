@@ -274,3 +274,20 @@ body {
     } 
 }
 
+/* default: desktop */
+.text-mobile {
+    display: none;
+}
+
+/* mobile-only text layout */
+@media (max-width: 768px) {
+    .text-desktop {
+        display: none;
+    }
+
+    .text-mobile {
+        display: block;
+    }
+}
+
+
