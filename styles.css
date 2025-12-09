@@ -1,3 +1,12 @@
+html {
+    background-color: #000;
+    background-image: url('12.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -9,10 +18,8 @@ body {
     overflow-x: hidden;
     position: relative;
     min-height: 100svh;
-    background-color: #000;
+    background-color: transparent;
 }
-
-
 
 
 /* SF Pro Text setup */
@@ -253,11 +260,11 @@ body {
 @media (max-width: 768px) {
     html,
     body {
-        height: 100svh;
-        overflow: hidden; /* no vertical scroll on mobile */
+        overflow: hidden; /* still no scroll, but no forced height */
     }
 
     .content {
-        min-height: 100svh; /* fill full viewport height */
+        min-height: 100svh;
     }
 }
+
