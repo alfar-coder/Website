@@ -232,3 +232,15 @@ body {
 .circular-play:active {
     transform: scale(0.96);
 }
+
+@media (max-width: 768px) {
+    html,
+    body {
+        height: 100svh;
+        overflow: hidden; /* no vertical scroll on mobile */
+    }
+
+    .content {
+        min-height: 100svh; /* fill full viewport height */
+    }
+}
