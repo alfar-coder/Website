@@ -60,14 +60,15 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    /* Use a fixed height well over the screen height */
     width: 100%;
-    /* Use 100vh and add 1 pixel to ensure it covers the bottom safe area */
-    height: calc(100vh + 1px); 
+    height: 120vh; 
     z-index: -1;
     overflow: hidden;
     background-color: #000;
-    /* Adding a tiny transform sometimes helps stabilize fixed elements */
-    transform: translateZ(0); 
+    /* Center it vertically but allow for an offset to cover the bottom safely */
+    transform: translateY(-10vh); 
+    /* This ensures the entire 120vh is positioned from -10vh to 110vh */
 }
 .background-image {
     position: absolute;
@@ -86,31 +87,17 @@ body {
 
 
 .content {
-    position: relative;
-    z-index: 1;
-    /* Change to min-height so it can grow if needed */
+    /* ... existing styles ... */
     min-height: 100dvh; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    padding: 2rem;
-    /* Add extra padding at the bottom for mobile bars */
+    /* Add padding for the bottom safe area */
     padding-bottom: calc(80px + env(safe-area-inset-bottom));
 }
 
 .footer {
     position: fixed;
-    /* Push it up by the safe area amount so the black bar doesn't cover it */
+    /* Push it up by the safe area amount */
     bottom: calc(12px + env(safe-area-inset-bottom));
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
+    /* ... existing styles ... */
 }
 
 .footer-text {
