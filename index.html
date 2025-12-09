@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,17 +12,10 @@
         <div class="background-image"></div>
         <div class="overlay"></div>
     </div>
-
-    <!-- Audio -->
     <audio id="stone-audio" preload="auto" src="Aphex Twin - Stone In Focus.mp3"></audio>
-
-    <!-- Listen / Mute text -->
-    <div class="audio-toggle">
-        <span id="stone-toggle" class="audio-toggle-text">
-            Listen
-        </span>
-    </div>
-
+    <button class="circular-play" id="stone-toggle" aria-label="Play Stone In Focus">
+        ▸
+    </button>
     <div class="content">
         <div class="main-frame">
             <div class="text-content">
@@ -54,8 +48,8 @@
                     <span class="link-text">Twitter</span>
                 </a>
             </div>
-        </div>
 
+        </div>
         <div class="footer">
             <button class="footer-text footer-copy" id="email-copy-btn" aria-label="Copy email">
                 alfar@manneskja.is
@@ -63,9 +57,7 @@
             <div class="copy-pill" id="copy-pill" role="status" aria-live="polite">Copied</div>
         </div>
     </div>
-
     <script>
-        // -------- Email copy logic --------
         const copyBtn = document.getElementById('email-copy-btn');
         const copyPill = document.getElementById('copy-pill');
         let copyTimeout;
@@ -73,17 +65,7 @@
         copyBtn.addEventListener('click', async () => {
             const email = copyBtn.textContent.trim();
             try {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    await navigator.clipboard.writeText(email);
-                } else {
-                    const tempInput = document.createElement('input');
-                    tempInput.value = email;
-                    document.body.appendChild(tempInput);
-                    tempInput.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(tempInput);
-                }
-
+                await navigator.clipboard.writeText(email);
                 copyPill.classList.add('visible');
                 clearTimeout(copyTimeout);
                 copyTimeout = setTimeout(() => {
@@ -94,40 +76,64 @@
             }
         });
 
-        // -------- Stone In Focus player (Listen / Mute text) --------
-        const stoneToggle = document.getElementById('stone-toggle');
+        // Stone In Focus player
+        const stoneBtn = document.getElementById('stone-toggle');
         const stoneAudio = document.getElementById('stone-audio');
         let stonePlaying = false;
 
-        function updateStoneLabel() {
-            stoneToggle.textContent = stonePlaying ? 'Mute' : 'Listen';
+        function setStoneLabel(label) {
+            stoneBtn.textContent = label;
         }
 
-        stoneToggle.addEventListener('click', async () => {
+        stoneBtn.addEventListener('click', async () => {
             if (!stoneAudio) return;
-
             if (stonePlaying) {
                 stoneAudio.pause();
                 stonePlaying = false;
-                updateStoneLabel();
+                setStoneLabel('▸');
             } else {
                 try {
                     await stoneAudio.play();
                     stonePlaying = true;
-                    updateStoneLabel();
+                    setStoneLabel('■');
                 } catch (err) {
                     console.error('Audio play failed', err);
+                    setStoneLabel('!');
                 }
             }
         });
 
+        // Best-effort autoplay: browsers often block without user gesture.
+        let triedAutoplay = false;
+        async function tryAutoplay() {
+            if (triedAutoplay || stonePlaying) return;
+            triedAutoplay = true;
+            try {
+                await stoneAudio.play();
+                stonePlaying = true;
+                setStoneLabel('■');
+            } catch (err) {
+                // If blocked, wait for first user interaction.
+                document.addEventListener('pointerdown', resumeFromGesture, { once: true });
+            }
+        }
+
+        async function resumeFromGesture() {
+            try {
+                await stoneAudio.play();
+                stonePlaying = true;
+                setStoneLabel('■');
+            } catch (err) {
+                setStoneLabel('▸');
+            }
+        }
+
+        tryAutoplay();
+
         stoneAudio.addEventListener('ended', () => {
             stonePlaying = false;
-            updateStoneLabel();
+            setStoneLabel('▸');
         });
-
-        // Initial label
-        updateStoneLabel();
     </script>
 </body>
 </html>
