@@ -269,7 +269,23 @@ body {
 }
 
 @media (max-width: 768px) {
+    /* stop hard centering on mobile */
     .content {
         height: 100vh;
+        justify-content: flex-start;
+        padding-top: 18vh; /* how high the text sits – tweak 15–22vh if you want */
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    /* spacer not needed on mobile */
+    .footer-spacer {
+        height: 0;
+        display: none;
+    }
+
+    .text-content {
+        max-width: 90%;
     }
 }
+
