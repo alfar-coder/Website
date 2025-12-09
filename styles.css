@@ -73,16 +73,17 @@ body {
 }
 .background-image {
     position: absolute;
-    top: -10%;
-    left: -10%;
-    width: 120%;
-    height: 120%;
+    top: -20vh;           /* extend above */
+    left: -10vw;
+    width: 120vw;
+    height: 160vh;        /* extend well below */
     background-image: url('12.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(200px);
+    /* no CSS blur – image is already blurred */
 }
+
 
 
 
