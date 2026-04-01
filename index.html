@@ -1,146 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Álfar Smári</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="Favicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Álfar Smári</title>
+  <link rel="icon" type="image/png" href="Favicon.png">
+  <style>
+    /* ─── Reset ─────────────────────────────────────────────── */
+    *, ::before, ::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border: none;
+      font: inherit;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a, button { cursor: pointer; color: inherit; text-decoration: none; background: none; }
+    a:focus, button:focus { outline: none; }
+
+    /* ─── Tokens ─────────────────────────────────────────────── */
+    :root {
+      --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+      --dur-fast: 0.15s;
+    }
+
+    /* ─── Base ───────────────────────────────────────────────── */
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+    }
+
+    /* ─── Background ─────────────────────────────────────────── */
+    .bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      background-image: url("bg.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.60);
+    }
+
+    @media (max-width: 768px) {
+      .bg::after {
+        background:
+          linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 30%),
+          linear-gradient(0deg,   rgba(0,0,0,1) 0%, rgba(0,0,0,0) 60%);
+      }
+    }
+
+    /* ─── Page layout ────────────────────────────────────────── */
+    .page {
+      position: relative;
+      z-index: 1;
+      height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ─── Top spacer ─────────────────────────────────────────── */
+    .top-bar {
+      width: 100%;
+      height: 66px;
+      flex-shrink: 0;
+    }
+
+    /* ─── Bio + buttons ──────────────────────────────────────── */
+    .bio-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .bio-text {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.40;
+      color: #fff;
+      max-width: 454px;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2px;
+      }
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ─── Pill buttons ───────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 99px;
+      padding: 13px 20px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18px;
+      line-height: 1.20;
+      white-space: nowrap;
+      color: rgba(255, 255, 255, 0.50);
+      background: transparent;
+      transition:
+        background var(--dur-fast) var(--ease-default),
+        color      var(--dur-fast) var(--ease-default),
+        transform  var(--dur-fast) var(--ease-default),
+        opacity    var(--dur-fast) var(--ease-default);
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+      opacity: 0.85;
+    }
+
+    /* ─── Bottom email bar ───────────────────────────────────── */
+    .email-bar {
+      width: 100%;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
+      flex-shrink: 0;
+    }
+
+    .email-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 99px;
+      padding: 13px 20px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18px;
+      line-height: 1.20;
+      color: rgba(255, 255, 255, 0.50);
+      background: transparent;
+      transition:
+        background var(--dur-fast) var(--ease-default),
+        color      var(--dur-fast) var(--ease-default),
+        transform  var(--dur-fast) var(--ease-default),
+        opacity    var(--dur-fast) var(--ease-default);
+    }
+
+    .email-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .email-btn:active {
+      transform: scale(0.97);
+      opacity: 0.85;
+    }
+
+    /* ─── Email copy label animation ─────────────────────────── */
+    .email-btn .label {
+      display: inline-block;
+      transition:
+        opacity 0.2s var(--ease-default),
+        transform 0.2s var(--ease-default);
+    }
+
+    .email-btn.copied .label {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+
+    .email-btn .label-copied {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px);
+      transition:
+        opacity 0.2s var(--ease-default),
+        transform 0.2s var(--ease-default);
+    }
+
+    .email-btn.copied .label-copied {
+      opacity: 1;
+      transform: translateY(0);
+      color: #ffffff;
+    }
+  </style>
 </head>
 <body>
-    <div class="background-container">
-        <div class="background-image"></div>
-        <div class="overlay"></div>
+
+  <!-- Background image + overlay -->
+  <div class="bg"></div>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Top spacer -->
+    <div class="top-bar"></div>
+
+    <!-- Bio + link buttons -->
+    <div class="bio-section">
+      <p class="bio-text">Álfar Smári is a designer from Iceland and co founder of Manneskja. Currently exploring interfaces through client work and experiments.</p>
+      <nav class="nav-buttons">
+        <a href="https://manneskja.is" target="_blank" rel="noopener" class="btn">Manneskja</a>
+        <a href="https://www.instagram.com/alfars.is/" target="_blank" rel="noopener" class="btn">Instagram</a>
+        <a href="https://x.com/alfarsmari" target="_blank" rel="noopener" class="btn">twitter</a>
+        <a href="https://www.cosmos.so/alfarsmari" target="_blank" rel="noopener" class="btn">Cosmos</a>
+      </nav>
     </div>
-<!--    
-    <audio id="stone-audio" preload="auto" src="Aphex Twin - Stone In Focus.mp3"></audio>
-    <button class="circular-play" id="stone-toggle" aria-label="Play Stone In Focus">
-        ▸
-    </button>
--->
-    <div class="content">
-        <div class="main-frame">
-            
-            <div class="text-content text-desktop">
-              Álfar Smári is a designer from Iceland and co founder of Manneskja.<br>
-              Currently exploring interfaces through client work and experiments.
-            </div>
 
-            <div class="text-content text-mobile">
-              Álfar Smári is a designer from<br>
-              Iceland and co founder of Manneskja.<br>
-              Currently exploring interfaces through<br>
-              client work and experiments.
-            </div>
-
-           <div class="links-container">
-                <a href="https://manneskja.is"
-                   class="link-link link-manneskja"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    <span class="link-text">Manneskja</span>
-                </a>
-            
-                <a href="https://www.instagram.com/alfars.is/"
-                   class="link-link link-social-ig"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    <span class="link-text">Instagram</span>
-                </a>
-            
-                <a href="https://x.com/alfarsmari"
-                   class="link-link link-social-x"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    <span class="link-text">Twitter</span>
-                </a>
-            </div>
-        </div>
-        <div class="footer">
-            <button class="footer-text footer-copy" id="email-copy-btn" aria-label="Copy email">
-                alfar@manneskja.is
-            </button>
-            <div class="copy-pill" id="copy-pill" role="status" aria-live="polite">Copied</div>
-        </div>
+    <!-- Email bar -->
+    <div class="email-bar">
+      <button class="email-btn" id="emailBtn" style="position:relative;">
+        <span class="label">alfar@manneskja.is</span>
+        <span class="label-copied">Copied</span>
+      </button>
     </div>
-    <script>
-        const copyBtn = document.getElementById('email-copy-btn');
-        const copyPill = document.getElementById('copy-pill');
-        let copyTimeout;
 
-        copyBtn.addEventListener('click', async () => {
-            const email = copyBtn.textContent.trim();
-            try {
-                await navigator.clipboard.writeText(email);
-                copyPill.classList.add('visible');
-                clearTimeout(copyTimeout);
-                copyTimeout = setTimeout(() => {
-                    copyPill.classList.remove('visible');
-                }, 2000);
-            } catch (err) {
-                console.error('Copy failed', err);
-            }
-        });
-/*
-        // Stone In Focus player
-        const stoneBtn = document.getElementById('stone-toggle');
-        const stoneAudio = document.getElementById('stone-audio');
-        let stonePlaying = false;
+  </div>
 
-        function setStoneLabel(label) {
-            stoneBtn.textContent = label;
-        }
+  <script>
+    const btn = document.getElementById('emailBtn');
+    let resetTimer;
 
-        stoneBtn.addEventListener('click', async () => {
-            if (!stoneAudio) return;
-            if (stonePlaying) {
-                stoneAudio.pause();
-                stonePlaying = false;
-                setStoneLabel('▸');
-            } else {
-                try {
-                    await stoneAudio.play();
-                    stonePlaying = true;
-                    setStoneLabel('■');
-                } catch (err) {
-                    console.error('Audio play failed', err);
-                    setStoneLabel('!');
-                }
-            }
-        });
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText('alfar@manneskja.is').then(() => {
+        clearTimeout(resetTimer);
+        btn.classList.add('copied');
+        resetTimer = setTimeout(() => btn.classList.remove('copied'), 2000);
+      });
+    });
+  </script>
 
-        // Best-effort autoplay: browsers often block without user gesture.
-        let triedAutoplay = false;
-        async function tryAutoplay() {
-            if (triedAutoplay || stonePlaying) return;
-            triedAutoplay = true;
-            try {
-                await stoneAudio.play();
-                stonePlaying = true;
-                setStoneLabel('■');
-            } catch (err) {
-                // If blocked, wait for first user interaction.
-                document.addEventListener('pointerdown', resumeFromGesture, { once: true });
-            }
-        }
-
-        async function resumeFromGesture() {
-            try {
-                await stoneAudio.play();
-                stonePlaying = true;
-                setStoneLabel('■');
-            } catch (err) {
-                setStoneLabel('▸');
-            }
-        }
-
-        tryAutoplay();
-
-        stoneAudio.addEventListener('ended', () => {
-            stonePlaying = false;
-            setStoneLabel('▸');
-        });
-*/
-    </script>
 </body>
 </html>
