@@ -9,8 +9,10 @@
     <link rel="icon" type="image/png" href="Favicon.png">
     <link rel="preload" href="assets/fonts/SuisseIntl-Book.otf" as="font" type="font/otf" crossorigin>
     <link rel="stylesheet" href="styles.css">
+    <script src="background.js" defer></script>
   </head>
   <body>
+    <div class="background" aria-hidden="true"><img id="background-image" src="bg.jpg" alt=""></div>
     <main class="stage">
       <section class="portfolio" aria-labelledby="portfolio-name">
         <header class="portfolio-header">
@@ -56,5 +58,16 @@
         </div>
       </section>
     </main>
+    <div class="background-tools">
+      <p class="background-status" role="status" aria-live="polite"></p>
+      <div class="background-actions">
+        <button class="background-button" id="background-reset" type="button" hidden>Reset</button>
+        <button class="background-button" id="background-upload" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 16V4m-4 4 4-4 4 4M5 15v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Upload background</span>
+        </button>
+      </div>
+      <input id="background-file" type="file" accept="image/*" hidden>
+    </div>
   </body>
 </html>
