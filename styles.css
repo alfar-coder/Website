@@ -1,0 +1,100 @@
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("assets/fonts/SuisseIntl-Book.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+:root {
+  color-scheme: light;
+  font-family: "Suisse Intl", Arial, sans-serif;
+  color: #000;
+  background: #fff;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+* { box-sizing: border-box; }
+body, h1, p, figure { margin: 0; }
+body { min-width: 280px; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; }
+.portfolio {
+  --device-scale: 1;
+  --project-gap: 120px;
+  min-height: 100svh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 40px 12px 12px;
+  overflow: hidden;
+}
+.identity { flex: 0 0 auto; text-align: center; }
+.identity h1, .identity p { font-size: 16px; font-weight: 400; line-height: 20px; }
+.identity p { color: rgb(0 0 0 / 40%); }
+.identity a { color: inherit; text-decoration: none; }
+.identity a:hover { opacity: .6; }
+.identity a:focus-visible { outline: 1px solid #888; outline-offset: 5px; border-radius: 2px; }
+.work { flex: 1 1 auto; min-height: 0; display: flex; }
+.carousel { flex: 1; display: flex; align-items: center; min-width: 0; overflow: hidden; outline: none; }
+.carousel:focus-visible { box-shadow: inset 0 -1px rgb(0 0 0 / 12%); }
+.track { display: flex; flex: none; width: max-content; transform: translate3d(clamp(24px, calc(50vw - 156px), 600px), 0, 0); }
+.sequence { display: flex; flex: none; align-items: center; gap: var(--project-gap); padding-right: var(--project-gap); }
+.project {
+  position: relative;
+  flex: 0 0 auto;
+  width: calc(var(--width) * var(--device-scale) * 1px);
+  height: calc(var(--height) * var(--device-scale) * 1px);
+}
+.project img { display: block; user-select: none; pointer-events: none; }
+.composition { width: 100%; height: 100%; object-fit: contain; }
+.truffle-device { position: absolute; width: 111.94%; height: auto; left: -5.97%; top: -2.586%; }
+.phone-hardware { position: absolute; left: -5.969%; top: -2.6325%; width: 111.94%; height: 105.264%; object-fit: cover; }
+.display-screen { position: absolute; top: 1.77%; left: 1.3133%; width: 97.372%; height: 73.867%; }
+.motion-control {
+  position: fixed;
+  right: 20px;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 68px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 24px;
+  color: rgb(0 0 0 / 40%);
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 150ms ease, background 150ms ease, transform 150ms ease;
+}
+.motion-control:hover { color: #000; background: #f5f5f5; }
+.motion-control:active { transform: scale(.96); }
+.motion-control:focus-visible { outline: 1px solid #888; outline-offset: 2px; }
+.control-icon { width: 10px; font-family: Arial, sans-serif; font-size: 11px; text-align: center; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 600px) {
+  .portfolio { --device-scale: .68; --project-gap: 64px; padding-top: max(28px, env(safe-area-inset-top)); gap: 28px; }
+  .track { transform: translate3d(24px, 0, 0); }
+}
+@media (max-height: 600px) and (min-width: 601px) {
+  .portfolio { --device-scale: .65; --project-gap: 80px; padding-top: 24px; gap: 24px; }
+}
+@media (max-height: 420px) {
+  .portfolio { --device-scale: .48; --project-gap: 56px; padding-top: 16px; gap: 16px; }
+}
+.portfolio.is-static .carousel { overflow-x: auto; scrollbar-width: thin; }
+.portfolio.is-static .track { transform: none; padding: 20px 12px; }
+.portfolio.is-static .sequence { padding-right: 12px; }
+.portfolio.is-static .sequence[aria-hidden] { display: none; }
+.portfolio.is-static .motion-control { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .carousel { overflow-x: auto; scrollbar-width: thin; }
+  .track { transform: none; padding: 20px 12px; }
+  .sequence { padding-right: 12px; }
+  .sequence[aria-hidden], .motion-control { display: none; }
+  .motion-control { transition: none; }
+}

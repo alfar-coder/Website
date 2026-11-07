@@ -1,267 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Álfar Smári</title>
-  <link rel="icon" type="image/png" href="Favicon.png">
-  <style>
-    /* ─── Reset ─────────────────────────────────────────────── */
-    *, ::before, ::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      border: none;
-      font: inherit;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    a, button { cursor: pointer; color: inherit; text-decoration: none; background: none; }
-    a:focus, button:focus { outline: none; }
-
-    /* ─── Tokens ─────────────────────────────────────────────── */
-    :root {
-      --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
-      --dur-fast: 0.15s;
-    }
-
-    /* ─── Base ───────────────────────────────────────────────── */
-    html, body {
-      height: 100%;
-      overflow: hidden;
-    }
-
-    body {
-      background: #000;
-      color: #fff;
-      font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
-    }
-
-    /* ─── Background ─────────────────────────────────────────── */
-    .bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      background-image: url("bg.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    .bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.60);
-    }
-
-    @media (max-width: 768px) {
-      .bg::after {
-        background:
-          linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 30%),
-          linear-gradient(0deg,   rgba(0,0,0,1) 0%, rgba(0,0,0,0) 60%);
-      }
-    }
-
-    /* ─── Page layout ────────────────────────────────────────── */
-    .page {
-      position: relative;
-      z-index: 1;
-      height: 100svh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    /* ─── Top spacer ─────────────────────────────────────────── */
-    .top-bar {
-      width: 100%;
-      height: 66px;
-      flex-shrink: 0;
-    }
-
-    /* ─── Bio + buttons ──────────────────────────────────────── */
-    .bio-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .bio-text {
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 1.40;
-      color: #fff;
-      max-width: 454px;
-      text-align: center;
-      padding: 0 24px;
-    }
-
-    @media (max-width: 768px) {
-      .nav-buttons {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 2px;
-      }
-    }
-
-    .nav-buttons {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    /* ─── Pill buttons ───────────────────────────────────────── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 99px;
-      padding: 13px 20px;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.18px;
-      line-height: 1.20;
-      white-space: nowrap;
-      color: rgba(255, 255, 255, 0.50);
-      background: transparent;
-      transition:
-        background var(--dur-fast) var(--ease-default),
-        color      var(--dur-fast) var(--ease-default),
-        transform  var(--dur-fast) var(--ease-default),
-        opacity    var(--dur-fast) var(--ease-default);
-    }
-
-    .btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: #ffffff;
-    }
-
-    .btn:active {
-      transform: scale(0.97);
-      opacity: 0.85;
-    }
-
-    /* ─── Bottom email bar ───────────────────────────────────── */
-    .email-bar {
-      width: 100%;
-      height: 62px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
-      flex-shrink: 0;
-    }
-
-    .email-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 99px;
-      padding: 13px 20px;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.18px;
-      line-height: 1.20;
-      color: rgba(255, 255, 255, 0.50);
-      background: transparent;
-      transition:
-        background var(--dur-fast) var(--ease-default),
-        color      var(--dur-fast) var(--ease-default),
-        transform  var(--dur-fast) var(--ease-default),
-        opacity    var(--dur-fast) var(--ease-default);
-    }
-
-    .email-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: #ffffff;
-    }
-
-    .email-btn:active {
-      transform: scale(0.97);
-      opacity: 0.85;
-    }
-
-    /* ─── Email copy label animation ─────────────────────────── */
-    .email-btn .label {
-      display: inline-block;
-      transition:
-        opacity 0.2s var(--ease-default),
-        transform 0.2s var(--ease-default);
-    }
-
-    .email-btn.copied .label {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-
-    .email-btn .label-copied {
-      position: absolute;
-      pointer-events: none;
-      opacity: 0;
-      transform: translateY(4px);
-      transition:
-        opacity 0.2s var(--ease-default),
-        transform 0.2s var(--ease-default);
-    }
-
-    .email-btn.copied .label-copied {
-      opacity: 1;
-      transform: translateY(0);
-      color: #ffffff;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Background image + overlay -->
-  <div class="bg"></div>
-
-  <!-- Page -->
-  <div class="page">
-
-    <!-- Top spacer -->
-    <div class="top-bar"></div>
-
-    <!-- Bio + link buttons -->
-    <div class="bio-section">
-      <p class="bio-text">Álfar Smári is a designer from Iceland and co founder of Manneskja. Currently exploring interfaces through client work and experiments.</p>
-      <nav class="nav-buttons">
-        <a href="https://manneskja.is" target="_blank" rel="noopener" class="btn">Manneskja</a>
-        <a href="https://www.instagram.com/alfars.is/" target="_blank" rel="noopener" class="btn">Instagram</a>
-        <a href="https://x.com/alfarsmari" target="_blank" rel="noopener" class="btn">twitter</a>
-        <a href="https://www.cosmos.so/alfarsmari" target="_blank" rel="noopener" class="btn">Cosmos</a>
-      </nav>
-    </div>
-
-    <!-- Email bar -->
-    <div class="email-bar">
-      <button class="email-btn" id="emailBtn" style="position:relative;">
-        <span class="label">alfar@manneskja.is</span>
-        <span class="label-copied">Copied</span>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Selected interfaces by Álfar Smári, a product designer from Iceland and co-founder of Manneskja.">
+    <meta name="theme-color" content="#ffffff">
+    <title>Álfar Smári — Product designer</title>
+    <link rel="icon" type="image/png" href="Favicon.png">
+    <link rel="preload" href="assets/fonts/SuisseIntl-Book.otf" as="font" type="font/otf" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+    <script src="carousel.js" defer></script>
+  </head>
+  <body>
+    <div class="portfolio is-static">
+      <header class="identity">
+        <h1><a href="mailto:alfar@manneskja.is">Álfar Smári</a></h1>
+        <p>Product designer</p>
+      </header>
+      <main class="work" aria-label="Selected product design work">
+        <section class="carousel" aria-label="Continuously scrolling portfolio" aria-describedby="carousel-help" tabindex="0">
+          <p class="visually-hidden" id="carousel-help">Five design projects moving left. Hover or focus here to pause. Use the arrow keys to explore, or the pause button to stop the motion.</p>
+          <div class="track">
+            <div class="sequence" role="list">
+              <figure class="project project--truffle" style="--width:182.136;--height:403" role="listitem">
+                <img class="truffle-device" src="assets/truffle-full.png" width="408" height="834" alt="Truffle conversational assistant on iPhone, with a pink and orange glow." draggable="false" fetchpriority="high">
+              </figure>
+              <figure class="project" style="--width:523.392;--height:388.35" role="listitem">
+                <img class="composition" src="assets/nollamd.png" width="524" height="389" alt="NollaMD healthcare interface on a Studio Display, with a sunlit room behind a symptom prompt." draggable="false">
+              </figure>
+              <figure class="project project--phone" style="--width:183.982;--height:400" role="listitem">
+                <img class="composition" src="assets/freepower.png" width="552" height="1200" alt="Freepower energy dashboard on iPhone, showing generation and a green daily energy chart." draggable="false">
+                <img class="phone-hardware" src="assets/iphone-hardware.png" width="1350" height="2760" alt="" draggable="false">
+              </figure>
+              <figure class="project project--display" style="--width:539.094;--height:400" role="listitem">
+                <img class="composition" src="assets/display-hardware.png" width="3806" height="2824" alt="FreePower wireless charging website on a Studio Display." draggable="false">
+                <img class="display-screen" src="assets/desktop-screen.png" width="525" height="296" alt="" draggable="false">
+              </figure>
+              <figure class="project project--phone" style="--width:183.982;--height:400" role="listitem">
+                <img class="composition" src="assets/savings.png" width="552" height="1200" alt="Dark savings interface on iPhone, with a balance chart and blue deposit button." draggable="false">
+                <img class="phone-hardware" src="assets/iphone-hardware.png" width="1350" height="2760" alt="" draggable="false">
+              </figure>
+            </div>
+          </div>
+        </section>
+      </main>
+      <button class="motion-control" type="button" aria-label="Pause carousel" aria-pressed="false">
+        <span class="control-icon" aria-hidden="true">Ⅱ</span>
+        <span class="control-label">Pause</span>
       </button>
     </div>
-
-  </div>
-
-  <script>
-    const btn = document.getElementById('emailBtn');
-    let resetTimer;
-
-    btn.addEventListener('click', () => {
-      navigator.clipboard.writeText('alfar@manneskja.is').then(() => {
-        clearTimeout(resetTimer);
-        btn.classList.add('copied');
-        resetTimer = setTimeout(() => btn.classList.remove('copied'), 2000);
-      });
-    });
-  </script>
-
-</body>
+  </body>
 </html>
