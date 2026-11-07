@@ -1,23 +1,18 @@
 # Álfar Smári
 
-A buildless personal portfolio based on [the Work frame in Figma](https://www.figma.com/design/BvJJ66MR43HD20sgNcUO9I?node-id=406-1048).
+A buildless personal portfolio matching [Figma frame 406:8917](https://www.figma.com/design/BvJJ66MR43HD20sgNcUO9I?node-id=406-8917), with project imagery from [Manneskja](https://manneskja.com/).
 
-Serve this directory with any static HTTP server. No install or build step is required.
+Serve the repository root with any static HTTP server. No installation or build step is required.
 
-The five original device compositions move left at 28 CSS pixels per second. The sequence repeats without a gap or reset, with enough decorative copies for wide displays. Hover, keyboard focus, or the pause button stops movement. The arrow keys explore the sequence while it has focus. Reduced-motion preferences show a manually scrollable row instead.
+The centered 762 × 525 panel has a fixed identity header and sidebar, with an independently scrollable image column. On narrow screens the sidebar sits above the gallery. The gallery supports touch, trackpad, and keyboard scrolling. Project images link to their corresponding Manneskja sections, and the name opens an email.
 
-## Artwork
+## Assets
 
-All artwork is local. The UI within each device is portfolio imagery. The page layout, identity, carousel, and controls are native HTML, CSS, and JavaScript.
+Client icons come directly from the Figma frame. The header and sidebar use the specified Suisse Intl Book font. All assets are stored locally, without temporary Figma URLs or runtime dependencies on Manneskja's asset filenames.
 
-| Asset | Figma source |
+| Local project image | Original Manneskja asset |
 | --- | --- |
-| `truffle-full.png` | `406:2495`, full rendered device bounds |
-| `nollamd.png` | `406:1626`, Studio Display composition |
-| `freepower.png` | `406:2014`, energy app composition |
-| `desktop-screen.png` | `406:1789`, wireless charging website screen |
-| `display-hardware.png` | Original image asset in `406:1788` |
-| `savings.png` | `406:2324`, savings app composition |
-| `iphone-hardware.png` | Original image asset in `406:2090` and `406:2480` |
-
-The header uses the Suisse Intl Book font specified by the design.
+| `assets/projects/freepower.webp` | `/assets/hero-1280-_qMvgZ9-.webp` |
+| `assets/projects/optivolt.webp` | `/assets/hero-iphone18-1280-eHdOLdxb.webp` |
+| `assets/projects/nolla.webp` | `/assets/nolla-hero-1280-CzBVy5LW.webp` |
+| `assets/projects/qava.webp` | `/assets/hero-1280-DqZ0KTUJ.webp` |

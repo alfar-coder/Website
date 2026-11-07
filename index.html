@@ -3,51 +3,58 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Selected interfaces by Álfar Smári, a product designer from Iceland and co-founder of Manneskja.">
+    <meta name="description" content="Selected work by Álfar Smári, product designer and co-founder of Manneskja.">
     <meta name="theme-color" content="#ffffff">
-    <title>Álfar Smári — Product designer</title>
+    <title>Álfar Smári — Selected work</title>
     <link rel="icon" type="image/png" href="Favicon.png">
     <link rel="preload" href="assets/fonts/SuisseIntl-Book.otf" as="font" type="font/otf" crossorigin>
     <link rel="stylesheet" href="styles.css">
-    <script src="carousel.js" defer></script>
   </head>
   <body>
-    <div class="portfolio is-static">
-      <header class="identity">
-        <h1><a href="mailto:alfar@manneskja.is">Álfar Smári</a></h1>
-        <p>Product designer</p>
-      </header>
-      <main class="work" aria-label="Selected product design work">
-        <section class="carousel" aria-label="Continuously scrolling portfolio" aria-describedby="carousel-help" tabindex="0">
-          <p class="visually-hidden" id="carousel-help">Five design projects moving left. Hover or focus here to pause. Use the arrow keys to explore, or the pause button to stop the motion.</p>
-          <div class="track">
-            <div class="sequence" role="list">
-              <figure class="project project--truffle" style="--width:182.136;--height:403" role="listitem">
-                <img class="truffle-device" src="assets/truffle-full.png" width="408" height="834" alt="Truffle conversational assistant on iPhone, with a pink and orange glow." draggable="false" fetchpriority="high">
-              </figure>
-              <figure class="project" style="--width:523.392;--height:388.35" role="listitem">
-                <img class="composition" src="assets/nollamd.png" width="524" height="389" alt="NollaMD healthcare interface on a Studio Display, with a sunlit room behind a symptom prompt." draggable="false">
-              </figure>
-              <figure class="project project--phone" style="--width:183.982;--height:400" role="listitem">
-                <img class="composition" src="assets/freepower.png" width="552" height="1200" alt="Freepower energy dashboard on iPhone, showing generation and a green daily energy chart." draggable="false">
-                <img class="phone-hardware" src="assets/iphone-hardware.png" width="1350" height="2760" alt="" draggable="false">
-              </figure>
-              <figure class="project project--display" style="--width:539.094;--height:400" role="listitem">
-                <img class="composition" src="assets/display-hardware.png" width="3806" height="2824" alt="FreePower wireless charging website on a Studio Display." draggable="false">
-                <img class="display-screen" src="assets/desktop-screen.png" width="525" height="296" alt="" draggable="false">
-              </figure>
-              <figure class="project project--phone" style="--width:183.982;--height:400" role="listitem">
-                <img class="composition" src="assets/savings.png" width="552" height="1200" alt="Dark savings interface on iPhone, with a balance chart and blue deposit button." draggable="false">
-                <img class="phone-hardware" src="assets/iphone-hardware.png" width="1350" height="2760" alt="" draggable="false">
-              </figure>
+    <main class="stage">
+      <section class="portfolio" aria-labelledby="portfolio-name">
+        <header class="portfolio-header">
+          <h1 id="portfolio-name"><a href="mailto:alfar@manneskja.is">Álfar Smári</a></h1>
+        </header>
+        <div class="portfolio-body">
+          <aside class="sidebar" aria-label="About Álfar">
+            <div class="sidebar-section">
+              <h2>Co founder of</h2>
+              <a class="studio" href="https://manneskja.com" target="_blank" rel="noopener noreferrer">
+                <span class="client-icon"><img src="assets/clients/manneskja.png" width="20" height="20" alt=""></span>
+                <span>Manneskja</span>
+              </a>
             </div>
+            <div class="sidebar-section">
+              <h2>Recent work includes</h2>
+              <ul class="clients" aria-label="Recent clients">
+                <li><span class="client-icon client-icon--border"><img src="assets/clients/truffle.png" width="20" height="20" alt=""></span><span>Truffle,</span></li>
+                <li><span class="client-icon client-icon--border"><img src="assets/clients/nolla.png" width="20" height="20" alt=""></span><span>Nolla,</span></li>
+                <li><span class="client-icon client-icon--border"><img src="assets/clients/vecct.png" width="20" height="20" alt=""></span><span>Vecct,</span></li>
+                <li><span class="client-icon client-icon--border"><img src="assets/clients/saint.png" width="20" height="20" alt=""></span><span>Saint,</span></li>
+                <li><span class="client-icon client-icon--optivolt"><img src="assets/clients/optivolt.png" width="20" height="20" alt=""></span><span>Optivolt,</span></li>
+                <li><span class="client-icon client-icon--light"><img src="assets/clients/piqy.png" width="20" height="20" alt=""></span><span>Piqy,</span></li>
+                <li><span class="client-icon client-icon--light"><img src="assets/clients/special-projects.png" width="20" height="20" alt=""></span><span>Special projects,</span></li>
+                <li><span class="client-icon client-icon--light client-icon--border"><img src="assets/clients/context.png" width="20" height="20" alt=""></span><span>Context,</span></li>
+              </ul>
+            </div>
+          </aside>
+          <div class="gallery" role="region" aria-label="Selected projects — scroll to explore" tabindex="0">
+            <a class="project" href="https://manneskja.com/#freepower" target="_blank" rel="noopener noreferrer" aria-label="View FreePower on Manneskja">
+              <img src="assets/projects/freepower.webp" width="1280" height="720" alt="FreePower wireless charging website on a desktop display." fetchpriority="high" decoding="async">
+            </a>
+            <a class="project" href="https://manneskja.com/#optivolt" target="_blank" rel="noopener noreferrer" aria-label="View Optivolt on Manneskja">
+              <img src="assets/projects/optivolt.webp" width="1280" height="720" alt="Optivolt solar energy dashboard on iPhone." decoding="async">
+            </a>
+            <a class="project" href="https://manneskja.com/#nolla-title" target="_blank" rel="noopener noreferrer" aria-label="View Nolla on Manneskja">
+              <img src="assets/projects/nolla.webp" width="1280" height="720" alt="Nolla healthcare platform on a desktop display." loading="lazy" decoding="async">
+            </a>
+            <a class="project" href="https://manneskja.com/#qava" target="_blank" rel="noopener noreferrer" aria-label="View Qava on Manneskja">
+              <img src="assets/projects/qava.webp" width="1280" height="720" alt="Qava portfolio and trading interface on iPhone." loading="lazy" decoding="async">
+            </a>
           </div>
-        </section>
-      </main>
-      <button class="motion-control" type="button" aria-label="Pause carousel" aria-pressed="false">
-        <span class="control-icon" aria-hidden="true">Ⅱ</span>
-        <span class="control-label">Pause</span>
-      </button>
-    </div>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
