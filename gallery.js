@@ -17,14 +17,24 @@ function nearest(position) {
     Math.abs(center - position) < Math.abs(centers[closest] - position) ? index : closest, 0);
 }
 
-function updateGlow() {
+function updateEmphasis() {
   // Native snapping can scroll during resize before the new centers are measured.
   if (gallery.clientWidth !== measuredWidth) return;
-  const index = nearest(gallery.scrollLeft);
-  if (index === active) return;
-  slides[active].classList.remove('is-centered');
-  slides[index].classList.add('is-centered');
-  active = index;
+  const position = gallery.scrollLeft;
+  const index = nearest(position);
+  if (index !== active) {
+    slides[active].classList.remove('is-centered');
+    slides[index].classList.add('is-centered');
+    active = index;
+  }
+
+  const spacing = centers[1] - centers[0];
+  slides.forEach((slide, index) => {
+    const proximity = clamp(1 - Math.abs(centers[index] - position) / spacing, 0, 1);
+    const emphasis = proximity * proximity * (3 - 2 * proximity);
+    slide.style.setProperty('--card-scale', 1 + 0.036 * emphasis);
+    slide.style.setProperty('--glow-opacity', emphasis ** 1.35);
+  });
 }
 
 function stopSpring() {
@@ -45,7 +55,7 @@ function settle(index, releaseSpeed = 0) {
     gallery.classList.remove('is-interacting');
     settlingTo = null;
     frame = 0;
-    updateGlow();
+    updateEmphasis();
   }
 
   if (reduceMotion.matches || Math.abs(displacement) < 1) {
@@ -55,7 +65,7 @@ function settle(index, releaseSpeed = 0) {
 
   settlingTo = index;
   // Critical damping carries the release speed into a firm landing without bounce.
-  const damping = 24;
+  const damping = 19;
   const maxSpeed = Math.abs(displacement) * damping;
   const speed = clamp(releaseSpeed, -maxSpeed, maxSpeed);
   const travel = speed + damping * displacement;
@@ -71,7 +81,7 @@ function settle(index, releaseSpeed = 0) {
       return;
     }
     gallery.scrollLeft = target + distance;
-    updateGlow();
+    updateEmphasis();
     frame = requestAnimationFrame(animate);
   }
 
@@ -95,13 +105,13 @@ function measure() {
   gallery.classList.add('is-interacting');
   gallery.scrollLeft = centers[keep];
   gallery.classList.remove('is-interacting', 'is-dragging');
-  updateGlow();
+  updateEmphasis();
 }
 
 gallery.classList.add('is-interactive');
 measure();
 new ResizeObserver(measure).observe(gallery);
-gallery.addEventListener('scroll', updateGlow, { passive: true });
+gallery.addEventListener('scroll', updateEmphasis, { passive: true });
 
 strip.addEventListener('pointerdown', event => {
   if (!event.isPrimary || event.button !== 0) return;
@@ -110,7 +120,7 @@ strip.addEventListener('pointerdown', event => {
     id: event.pointerId,
     x: event.clientX,
     y: event.clientY,
-    samples: [[event.clientX, event.timeStamp]],
+    samples: [],
     dragging: false,
   };
 });
@@ -130,14 +140,19 @@ strip.addEventListener('pointermove', event => {
     gesture.dragging = true;
     gesture.position = gallery.scrollLeft;
     gesture.index = nearest(gesture.position);
+    gesture.samples.push([gesture.position, event.timeStamp]);
     strip.setPointerCapture(event.pointerId);
     gallery.classList.add('is-interacting', 'is-dragging');
   }
 
   const first = centers[Math.max(0, gesture.index - 1)];
   const last = centers[Math.min(slides.length - 1, gesture.index + 1)];
-  gallery.scrollLeft = clamp(gesture.position - dx, first, last);
-  gesture.samples.push([event.clientX, event.timeStamp]);
+  const proposed = gesture.position - dx;
+  const limit = clamp(proposed, first, last);
+  const stretch = proposed - limit;
+  // Ease the pull past the adjacent card. Release still settles one card away.
+  gallery.scrollLeft = limit + 24 * stretch / (24 + Math.abs(stretch));
+  gesture.samples.push([gallery.scrollLeft, event.timeStamp]);
   gesture.samples = gesture.samples.filter(([, time]) => event.timeStamp - time <= 90);
 });
 
@@ -154,7 +169,7 @@ function release(event, cancelled = false) {
   }
 
   const recent = drag.samples.find(([, time]) => event.timeStamp - time <= 90);
-  const velocity = recent ? (recent[0] - event.clientX) * 1000 / Math.max(16, event.timeStamp - recent[1]) : 0;
+  const velocity = recent ? (gallery.scrollLeft - recent[0]) * 1000 / Math.max(16, event.timeStamp - recent[1]) : 0;
   const moved = gallery.scrollLeft - centers[drag.index];
   const projection = moved + velocity * 0.12;
   const threshold = Math.min(96, slides[drag.index].offsetWidth * 0.22);
