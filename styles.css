@@ -96,7 +96,7 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 .contact li:first-child a { width: 40px; padding-inline: 0; }
 
 .portrait-footer {
-  --portrait-gap: 20px;
+  --portrait-gap: 40px;
   display: grid;
   justify-items: center;
   gap: var(--portrait-gap);
