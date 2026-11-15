@@ -10,6 +10,7 @@
     <link rel="preload" href="assets/fonts/SuisseIntl-Book.otf" as="font" type="font/otf" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <script src="gallery.js" defer></script>
+    <script type="module" src="assets/portrait/spin.js"></script>
   </head>
   <body>
     <header class="intro">
@@ -68,7 +69,7 @@
         <p>Truffle, Nolla, Optivolt, Special projects, Saint</p>
       </section>
 
-      <nav class="text-column details" aria-labelledby="connect-heading">
+      <nav class="text-column details contact" aria-labelledby="connect-heading">
         <h2 id="connect-heading">Connect</h2>
         <ul>
           <li><a href="https://x.com/alfarsmari">X</a></li>
@@ -78,5 +79,10 @@
         </ul>
       </nav>
     </main>
+    <footer class="portrait-footer">
+      <button class="portrait" type="button" aria-label="Pause Álfar Smári’s rotating portrait">
+        <canvas width="320" height="320" aria-hidden="true"></canvas>
+      </button>
+    </footer>
   </body>
 </html>

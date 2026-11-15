@@ -6,6 +6,7 @@ const clamp = (value, lower, upper) => Math.min(upper, Math.max(lower, value));
 
 let centers = [];
 let measuredWidth = 0;
+let renderedPosition = null;
 let active = 0;
 let frame = 0;
 let settlingTo = null;
@@ -21,6 +22,8 @@ function updateEmphasis() {
   // Native snapping can scroll during resize before the new centers are measured.
   if (gallery.clientWidth !== measuredWidth) return;
   const position = gallery.scrollLeft;
+  if (position === renderedPosition) return;
+  renderedPosition = position;
   const index = nearest(position);
   if (index !== active) {
     slides[active].classList.remove('is-centered');
@@ -65,7 +68,7 @@ function settle(index, releaseSpeed = 0) {
 
   settlingTo = index;
   // Critical damping carries the release speed into a firm landing without bounce.
-  const damping = 19;
+  const damping = 17;
   const maxSpeed = Math.abs(displacement) * damping;
   const speed = clamp(releaseSpeed, -maxSpeed, maxSpeed);
   const travel = speed + damping * displacement;
@@ -98,6 +101,7 @@ function measure() {
     return Math.round(card.left - viewport.left + gallery.scrollLeft + (card.width - viewport.width) / 2);
   });
   measuredWidth = width;
+  renderedPosition = null;
 
   stopSpring();
   if (gesture?.dragging) suppressClick = true;
@@ -108,13 +112,13 @@ function measure() {
   updateEmphasis();
 }
 
-gallery.classList.add('is-interactive');
 measure();
 new ResizeObserver(measure).observe(gallery);
 gallery.addEventListener('scroll', updateEmphasis, { passive: true });
 
 strip.addEventListener('pointerdown', event => {
-  if (!event.isPrimary || event.button !== 0) return;
+  // Touch and pen use the browser's native momentum and directional scrolling.
+  if (event.pointerType !== 'mouse' || !event.isPrimary || event.button !== 0) return;
   suppressClick = false;
   gesture = {
     id: event.pointerId,
