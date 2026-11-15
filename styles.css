@@ -80,41 +80,54 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 .details ul { list-style: none; padding: 0; }
 
 .work-gallery {
-  --scroll-inset: max(var(--gutter), (100% - var(--card-width)) / 2);
+  container-type: inline-size;
   /* The glow needs space above and below without moving the surrounding text. */
   padding-block: 150px;
   margin-block: -150px;
   overflow-x: auto;
   scrollbar-width: none;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
 }
 
 .work-gallery::-webkit-scrollbar { display: none; }
 .work-gallery:focus-visible { outline: 1px solid var(--muted); outline-offset: -1px; }
 
 .work-strip {
+  --slide-width: min(var(--card-width), calc(100cqw - 2 * var(--gutter)));
+  --scroll-inset: calc((100cqw - var(--slide-width)) / 2);
   display: flex;
+  width: max-content;
   gap: var(--card-gap);
   padding-inline: var(--scroll-inset);
 }
 
+.work-gallery.is-interactive .work-strip { touch-action: pan-y pinch-zoom; }
+.work-gallery.is-interacting { scroll-snap-type: none; }
+.work-gallery.is-dragging .work-strip { cursor: grabbing; user-select: none; }
+.work-gallery.is-dragging .work-card { cursor: inherit; }
+
 .work-item {
   position: relative;
-  flex: 0 0 100%;
-  max-width: var(--card-width);
+  width: var(--slide-width);
+  flex: none;
   aspect-ratio: 712 / 432.821;
   scroll-snap-align: center;
+  scroll-snap-stop: always;
 }
 
-.work-item--featured::before {
+.work-item::before {
   position: absolute;
   inset: 0;
   border-radius: var(--card-radius);
   background: var(--card-shade), url("assets/projects/nolla-interior.png") center / cover;
   filter: blur(50px);
+  opacity: 0;
+  transition: opacity 150ms ease-out;
   content: "";
   pointer-events: none;
 }
+.work-item.is-centered::before { opacity: 1; }
 
 .work-card {
   position: relative;
@@ -146,6 +159,10 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 }
 
 .work-caption p:last-child { color: rgb(255 255 255 / 40%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .work-item::before { transition: none; }
+}
 
 @media (max-width: 600px) {
   :root {
