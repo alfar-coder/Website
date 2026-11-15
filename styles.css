@@ -108,7 +108,7 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
   width: 160px;
   aspect-ratio: 1;
   padding: 0;
-  border: 0;
+  border: 1px solid rgb(0 0 0 / 4%);
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
