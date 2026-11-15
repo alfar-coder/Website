@@ -62,7 +62,6 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   row-gap: var(--section-gap);
-  padding-bottom: 120px;
 }
 
 .text-column {
@@ -99,8 +98,8 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 .portrait-footer {
   display: grid;
   justify-items: center;
-  margin-top: -40px;
-  padding-bottom: 80px;
+  gap: 20px;
+  padding-block: var(--section-gap) 80px;
 }
 .portrait {
   display: grid;
@@ -218,7 +217,6 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
     --card-radius: 24px;
   }
 
-  .portfolio { padding-bottom: 80px; }
   .biography { gap: 32px; }
   .contact ul { gap: 8px; }
   .work-caption { inset: auto 16px 16px; }
