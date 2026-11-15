@@ -165,10 +165,11 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 .portrait:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
 
 .work-gallery {
+  --glow-bleed: 150px;
   container-type: inline-size;
   /* The glow needs space above and below without moving the surrounding text. */
-  padding-block: 150px;
-  margin-block: -150px;
+  padding-block: var(--glow-bleed);
+  margin-block: calc(-1 * var(--glow-bleed));
   overflow-x: auto;
   scrollbar-width: none;
   scroll-snap-type: x mandatory;
@@ -255,6 +256,22 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 
 @media (prefers-reduced-motion: reduce) {
   .work-item::before, .work-card { transform: none; }
+}
+
+@media (max-width: 600px), (hover: none) and (pointer: coarse) {
+  .clients a { text-decoration: none; }
+
+  .work-item--nolla { --mobile-glow: url("assets/projects/nolla-glow.webp"); }
+  .work-item--snow { --mobile-glow: url("assets/projects/snow-emblem-glow.webp"); }
+  .work-item--corridor { --mobile-glow: url("assets/projects/teal-corridor-glow.webp"); }
+
+  .work-item::before {
+    /* The pre-rendered glow extends past the card without changing its scroll bounds. */
+    border-image: var(--mobile-glow) 0 fill / 0 / var(--glow-bleed);
+    background: none;
+    filter: none;
+    transform: none;
+  }
 }
 
 @media (max-width: 600px) {
