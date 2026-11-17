@@ -54,25 +54,51 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 .portfolio > .text-column { text-align: start; }
 
 .studio-photo {
-  display: grid;
-  gap: 16px;
-  width: min(540px, 100% - 2 * var(--gutter));
+  --studio-shade: linear-gradient(to bottom, transparent 72%, rgb(0 0 0 / 80%));
+  position: relative;
+  isolation: isolate;
+  width: min(712px, 100% - 2 * var(--gutter));
+  aspect-ratio: 712 / 432.821;
   margin: 0 auto;
+  border-radius: 32px;
+}
+
+.studio-photo::before,
+.studio-photo::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+}
+
+.studio-photo::before {
+  z-index: -1;
+  background: var(--studio-shade), url("assets/studio.jpg") center / cover;
+  filter: blur(50px);
+}
+
+.studio-photo::after {
+  background: var(--studio-shade);
 }
 
 .studio-photo img {
   display: block;
   width: 100%;
-  height: auto;
-  border-radius: 32px;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
 }
 
 .studio-photo figcaption {
-  display: grid;
-  gap: 4px;
+  position: absolute;
+  z-index: 1;
+  inset: auto 16px 24px;
+  color: #fff;
+  text-align: center;
 }
 
-.studio-photo figcaption p { color: var(--muted); }
+.studio-photo figcaption p { color: rgb(255 255 255 / 50%); }
 
 .biography, .details { display: grid; }
 .biography { gap: 40px; }
@@ -166,6 +192,7 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
   }
 
   .biography { gap: 32px; }
-  .studio-photo img { border-radius: 24px; }
+  .studio-photo { border-radius: 24px; }
+  .studio-photo figcaption { bottom: 16px; }
   .contact ul { gap: 8px; }
 }
