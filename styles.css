@@ -16,7 +16,7 @@
   --muted: rgb(0 0 0 / 40%);
   --gutter: 24px;
   --text-width: 400px;
-  --section-gap: 80px;
+  --section-gap: 120px;
 }
 
 * { box-sizing: border-box; }
@@ -50,6 +50,8 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
   margin-inline: auto;
   text-align: center;
 }
+
+.portfolio > .text-column { text-align: start; }
 
 .biography, .details { display: grid; }
 .biography { gap: 40px; }
@@ -139,7 +141,7 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 @media (max-width: 600px) {
   :root {
     --gutter: 20px;
-    --section-gap: 64px;
+    --section-gap: 96px;
   }
 
   .biography { gap: 32px; }
