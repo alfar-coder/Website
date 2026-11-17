@@ -16,11 +16,7 @@
   --muted: rgb(0 0 0 / 40%);
   --gutter: 24px;
   --text-width: 400px;
-  --card-width: 712px;
-  --card-gap: 24px;
   --section-gap: 80px;
-  --card-radius: 32px;
-  --card-shade: linear-gradient(to bottom, transparent 53.255%, #000);
 }
 
 * { box-sizing: border-box; }
@@ -40,24 +36,6 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 }
 
 .intro p, .biography, .details p, .details ul { color: var(--muted); }
-.intro-role { display: flex; align-items: center; justify-content: center; gap: 8px; }
-.studio-mark {
-  flex: none;
-  position: relative;
-  display: block;
-  border-radius: 8px;
-  box-shadow: 0 0 24px rgb(0 0 0 / 4%);
-}
-.studio-mark::after {
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgb(0 0 0 / 4%);
-  border-radius: inherit;
-  content: "";
-  pointer-events: none;
-}
-.studio-mark img { display: block; border-radius: inherit; }
-.studio-mark:focus-visible { border-radius: 8px; }
 
 .portfolio {
   display: grid;
@@ -80,14 +58,10 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 .details ul { list-style: none; padding: 0; }
 .clients a {
   color: #666;
-  text-decoration: underline;
-  text-decoration-color: rgb(0 0 0 / 25%);
-  text-underline-offset: 0.2em;
   white-space: nowrap;
 }
 .clients a:is(:hover, :focus-visible) {
   color: #000;
-  text-decoration-color: currentColor;
 }
 .contact ul {
   display: flex;
@@ -125,14 +99,12 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .studio-mark { transition: scale 220ms cubic-bezier(0.2, 0, 0, 1); }
   .contact a {
     transition: background-color 180ms ease-out, color 180ms ease-out,
       translate 220ms cubic-bezier(0.2, 0, 0, 1), scale 150ms ease-out;
   }
 
   @media (hover: hover) {
-    .studio-mark:hover { scale: 1.12; }
     .contact a:hover { translate: 0 -2px; }
   }
 
@@ -164,125 +136,12 @@ a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-r
 .portrait[hidden] { display: none; }
 .portrait:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
 
-.work-gallery {
-  --glow-bleed: 150px;
-  container-type: inline-size;
-  /* The glow needs space above and below without moving the surrounding text. */
-  padding-block: var(--glow-bleed);
-  margin-block: calc(-1 * var(--glow-bleed));
-  overflow-x: auto;
-  scrollbar-width: none;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior-x: contain;
-}
-
-.work-gallery::-webkit-scrollbar { display: none; }
-.work-gallery:focus-visible { outline: 1px solid var(--muted); outline-offset: -1px; }
-
-.work-strip {
-  --slide-width: min(var(--card-width), calc(100cqw - 2 * var(--gutter)));
-  --scroll-inset: calc((100cqw - var(--slide-width)) / 2);
-  display: flex;
-  width: max-content;
-  gap: var(--card-gap);
-  padding-inline: var(--scroll-inset);
-}
-
-.work-gallery.is-interacting { scroll-snap-type: none; }
-.work-gallery.is-dragging .work-strip { cursor: grabbing; user-select: none; }
-.work-gallery.is-dragging .work-card { cursor: inherit; }
-
-.work-item {
-  --photo-position: center;
-  position: relative;
-  width: var(--slide-width);
-  flex: none;
-  aspect-ratio: 712 / 432.821;
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-}
-.work-item--nolla { --photo: url("assets/projects/nolla-interior.png"); }
-.work-item--snow { --photo: url("assets/projects/snow-emblem.png"); }
-.work-item--corridor {
-  --photo: url("assets/projects/teal-corridor.png");
-  --photo-position: 50% 56%;
-}
-
-.work-item::before {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--card-radius);
-  background: var(--photo) var(--photo-position) / cover;
-  filter: blur(50px);
-  opacity: var(--glow-opacity, 0);
-  transform: scale(var(--card-scale, 1));
-  content: "";
-  pointer-events: none;
-}
-.work-item--nolla::before { background-image: var(--card-shade), var(--photo); }
-.work-item.is-centered { --glow-opacity: 1; --card-scale: 1.036; }
-
-.work-card {
-  position: relative;
-  display: block;
-  height: 100%;
-  overflow: hidden;
-  border-radius: var(--card-radius);
-  background: #f5f5f5;
-  box-shadow: 0 4px 24px rgb(0 0 0 / 4%);
-  transform: scale(var(--card-scale, 1));
-}
-
-.work-card img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: var(--photo-position); }
-.work-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--card-shade);
-  pointer-events: none;
-}
-
-.work-card:focus-visible { outline: 2px solid #fff; outline-offset: -5px; border-radius: var(--card-radius); }
-
-.work-caption {
-  position: absolute;
-  z-index: 1;
-  inset: auto 24px 24px;
-  color: #fff;
-  text-align: center;
-}
-
-.work-caption p:last-child { color: rgb(255 255 255 / 40%); }
-
-@media (prefers-reduced-motion: reduce) {
-  .work-item::before, .work-card { transform: none; }
-}
-
-@media (max-width: 600px), (hover: none) and (pointer: coarse) {
-  .clients a { text-decoration: none; }
-
-  .work-item--nolla { --mobile-glow: url("assets/projects/nolla-glow.webp"); }
-  .work-item--snow { --mobile-glow: url("assets/projects/snow-emblem-glow.webp"); }
-  .work-item--corridor { --mobile-glow: url("assets/projects/teal-corridor-glow.webp"); }
-
-  .work-item::before {
-    /* The pre-rendered glow extends past the card without changing its scroll bounds. */
-    border-image: var(--mobile-glow) 0 fill / 0 / var(--glow-bleed);
-    background: none;
-    filter: none;
-    transform: none;
-  }
-}
-
 @media (max-width: 600px) {
   :root {
     --gutter: 20px;
-    --card-gap: 12px;
     --section-gap: 64px;
-    --card-radius: 24px;
   }
 
   .biography { gap: 32px; }
   .contact ul { gap: 8px; }
-  .work-caption { inset: auto 16px 16px; }
 }
