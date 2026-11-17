@@ -10,6 +10,7 @@
     <link rel="preload" href="assets/fonts/SuisseIntl-Book.otf" as="font" type="font/otf" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="assets/portrait/spin.js"></script>
+    <script type="module" src="contact.js"></script>
   </head>
   <body>
     <header class="intro">
@@ -19,11 +20,8 @@
 
     <main class="portfolio">
       <section class="biography text-column" aria-label="About Álfar">
-        <div class="biography-copy">
-          <p>I’m interested in the decisions that shape a product before it has an interface. What do people come here to do? What are we making harder than it needs to be?</p>
-          <p>Designing the screen is how I work through those questions.</p>
-        </div>
-        <p>Co-Founder of <a href="https://manneskja.com/">Manneskja</a></p>
+        <p>I’m interested in the decisions that shape a product before it has an interface. What do people come here to do? What are we making harder than it needs to be?</p>
+        <p>Designing the screen is how I work through those questions.</p>
       </section>
 
       <figure class="studio-photo">
@@ -46,13 +44,19 @@
       </section>
     </main>
     <footer class="portrait-footer">
-      <button class="portrait" type="button" aria-label="Pause Álfar Smári’s rotating portrait">
-        <canvas width="320" height="320" aria-hidden="true"></canvas>
-      </button>
+      <div class="portrait">
+        <canvas width="320" height="320" role="img" aria-label="Álfar Smári’s portrait"></canvas>
+      </div>
       <nav class="text-column details contact" aria-label="Contact">
         <ul>
           <li><a href="https://x.com/alfarsmari">X</a></li>
-          <li><a href="mailto:alfar@manneskja.is">Email</a></li>
+          <li class="contact-email">
+            <button class="email-copy" type="button" aria-label="Copy email address" aria-describedby="email-address">
+              <span>Email</span><span aria-hidden="true">Copied</span>
+            </button>
+            <span id="email-address" class="email-address">alfar@manneskja.is</span>
+            <span class="email-status" role="status"></span>
+          </li>
           <li><a href="https://www.instagram.com/alfars.is/">Instagram</a></li>
           <li><a href="https://www.cosmos.so/alfarsmari">Cosmos</a></li>
         </ul>
