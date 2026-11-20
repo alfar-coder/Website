@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("assets/fonts/SuisseIntl-Book.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  background: #fff;
+  color: #000;
+  font: 400 16px/1.25 "Suisse Intl", Arial, sans-serif;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+body, h1, p { margin: 0; }
+h1 { font: inherit; }
+
+.intro {
+  box-sizing: border-box;
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  gap: 4px;
+  padding: 24px;
+  text-align: center;
+}
+
+.intro p { color: #999; }
