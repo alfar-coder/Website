@@ -36,4 +36,8 @@ h1 { font: inherit; }
   text-decoration: none;
 }
 
-.intro a:is(:hover, :focus-visible) { text-decoration: underline; }
+.intro a:is(:hover, :focus-visible) { color: #000; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .intro a { transition: color 180ms ease-out; }
+}
