@@ -30,3 +30,10 @@ h1 { font: inherit; }
 }
 
 .intro p { color: #999; }
+
+.intro a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.intro a:is(:hover, :focus-visible) { text-decoration: underline; }
